@@ -15,13 +15,19 @@ In order to get a solid understanding on how BROMOC works, consult the original 
  
 - Pablo M. De Biase, Suren Markosyan and Sergei Noskov. Microsecond Simulations of DNA and Ion Transport in Nanopores with Noverl Ion-Ion and Ion-Nucleotides Effective Potentials. Journal of Computational Chemistry (2014) 
 
-For complete a description of BROMOC usage, please refer to the "Documentation" section provided with the code tarball (freely available to download from http://noskovlab.com/downloads/bromoc.tar.bz2)
+For complete a description of BROMOC usage, please refer to the "Documentation" section
  
 The software needed to follow this tutorial:
- - BROMOC (http://www.noskovlab.com)
- - EFPOT/ECP (http://www.noslovlab.com)
+   Last update version from https://github.com/pablodebiase
+   or alternatively from http://wcm.ucalgary.ca/noskovlab
+
+ - BROMOC (https://github.com/pablodebiase/bromoc)
+ - BROMOC Tutorial (https://github.com/pablodebiase/bromoc-tutorial)
+ - EFPOT/ECP (https://github.com/pablodebiase/efpot-mu)
+ - EFPOT Tutorial (https://github.com/pablodebiase/efpot-tutorial)
  - CHARMM (http://www.charmm.org)
  - VMD (http://www.ks.uiuc.edu/Research/vmd/)
+ - GIT (sudo apt-get install git)
 
 Recommended OS:
  - Linux
@@ -32,20 +38,16 @@ Recommended OS:
         $ vi TUTORIAL
 
 ## Download and place Effective Potentials for DNA-KCl into efpot folder
-        $ wget http://noskovlab.com/downloads/ep-ecp-dna-kcl.tar.bz2 # do this inside bromoc-tutorial folder
-	$ tar xvf ep-ecp-dna-kcl.tar.bz2
-	$ mv ep-ecp-dna-kcl efpot  #rename folder to efpot
+        $ git clone https://github.com/pablodebiase/efpot-mu.git # do this inside bromoc-tutorial folder
+	$ ln -s efpot-mu/dna-kcl efpot  #Create a Symbolic Link efpot
 
 ## Install BROMOC (in Linux)
 #       * GNU or Intel compilers must be installed
-	$ wget http://noskovlab.com/downloads/bromoc.tar.bz2
-	$ tar xvf bromoc.tar.bz2
+	$ git clone https://github.com/pablodebiase/bromoc.git
         $ cd bromoc
         $ ./install       # for GNU compilers or
         $ ./install intel # for intel compilers
 	$ export PATH=$PWD/bin:$PATH
-	$ echo 'export PATH='$PWD'/bin:$PATH' >> ~/.bashrc
-
 
 ## Prepare protein structure of interest. In this example: staphylococcal alpha-hemolysin ##
 	Get the structure of staphylococcal alpha-hemolysin, a heptameric transmembrane pore. 
@@ -132,7 +134,7 @@ Recommended OS:
         In this example we are going to use the previously heated-up DNA. First we are going to fill the system with ions using 
         GCMC (Gran Canonical Monte Carlo) and MCM (Monte Carlo Move). Then we will do a short equilibration using BD (Brownian Dynamics).
         Finally, a 0.1 us production BD run and measure the ion current. In this example we use effective potentials contained in 
-        folder "efpot" (prepared above). DNA-KCl effective potential set were developed by Noskov Lab. Check our website: http://www.noskovlab.com
+        folder "efpot" (prepared above). DNA-KCl effective potential set were developed by Noskov Lab. 
  
 	First, navigate to "testrun" directory
         $ cd ../testrun
@@ -263,6 +265,9 @@ Recommended OS:
 
 	Navigate to "examples/sph-rdf" directory
 	$ cd ../sph-rdf
+
+        Create Symbolic Links of the potentials
+        $ for i in ../../efpot/*.pot; do ln -s $i ; done
 
 	Generate ions and equilibrate system. Run "bd-ions-gener.inp" input ang generate "bd-ions-gener.bco"
 	$ bromoc < bd-ions-gener.inp > bd-ions-gener.out
