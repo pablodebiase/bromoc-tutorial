@@ -1,5 +1,10 @@
 ## BROMOC Tutorial ##
 
+* Authors: 
+    - Pablo M. De Biase
+    - Suren Markosyan
+    - Sergei Yu. Noskov
+
 This tutorial will guide you to learn how to prepare the necessary files to run BROMOC simulations.
 The case example of alpha-hemolysin and single stranded DNA olygomer (40 Adenine nucleotides) is presented in this tutorial. 
 However, BROMOC suite allows you to employ any kind of ion channel.  
@@ -52,6 +57,10 @@ Recommended OS:
 
  	Navigate to "crd" folder
 	$ cd crd
+
+        Protonate HIS 144 in pdb
+        $ mv wt.pdb wt-original.pdb
+        $ sed 's/ HIS   144 / HSP   144 /g' wt-original.pdb > wt.pdb
     
         Convert pdb to crd (crd is CHARMM coordinates format) using "pdb2crd" from BROMOC tools
         $ pdb2crd wt.pdb wt.crd n
